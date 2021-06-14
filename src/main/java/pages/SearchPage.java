@@ -7,10 +7,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SearchPage extends BasePage {
 
-    @FindBy(xpath = "//a[@class='s-item__link']//h3[@class='s-item__title']")
+    @FindBy(xpath = "//div[@id='srp-river-results']//a[@class='s-item__link']")
     List<WebElement> searchResultList;
 
     @FindBy(xpath = "//h3[contains(text(),'No exact matches found')]")
@@ -33,8 +34,7 @@ public class SearchPage extends BasePage {
     }
 
     public void clickOnSearchResult(int i){
-        Actions builder = new Actions(driver);
-        builder.moveToElement(getSearchResult(i)).perform();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", getSearchResult(i));
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        getSearchResult(i).click();
     }
 }

@@ -9,7 +9,10 @@ import manager.PageFactoryManager;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import pages.*;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -30,11 +33,15 @@ public class DefenitionSteps {
     SearchPage searchPage;
     ItemPage itemPage;
     SellerPage sellerPage;
+    ChromeOptions ops = new ChromeOptions();
 
     @Before
     public void testsSetUp() {
         chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("excludeSwitches",
+                Arrays.asList("disable-popup-blocking"));
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         pageFactoryManager = new PageFactoryManager(driver);
     }
